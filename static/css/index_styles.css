@@ -1,0 +1,473 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*
+.montserrat-<uniquifier> {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    font-family: "Montserrat", sans-serif;
+
+}
+
+
+.title {
+    font-size: 30px;
+    font-weight: 400;
+    color: white;
+    width: 60px;
+    padding: 10px 0px 0px 10px;
+    }
+    
+    .title span {
+        font-weight: 600;
+}
+
+.page{
+    height: 780px;
+}
+
+/*Circular Stats Starts*/
+.stat1 {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: rgb(18, 18, 18);
+    border-radius: 20px;
+    margin: 10px;
+    padding: 15px 0px;
+}
+
+.card .percent {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.card .percent svg {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    transform: rotate(270deg);
+}
+
+.card .percent svg circle {
+    width: 100%;
+    height: 100%;
+    fill: transparent;
+    stroke-width: 4;
+    stroke: rgb(42, 42, 42);
+    transform: translate(10px, 10px);
+}
+
+.card .percent svg circle:nth-child(2) {
+    stroke: var(--clr);
+    stroke-dasharray: 260;
+    stroke-dashoffset: calc(260 - (260*var(--num))/100);
+    opacity: 0;
+    animation: fadeIn 0.5s linear forwards;
+    animation-delay: 0.5s;
+}
+
+
+.dot {
+    position: absolute;
+    inset: 5px;
+    z-index: 10;
+    animation: animateDot 0.5s linear forwards;
+}
+
+
+.dot::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-30%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--clr);
+    box-shadow: 0 0 10px var(--clr),
+        0 0 30px var(--clr);
+}
+
+.number {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    animation: fadeIn 0.5s linear forwards;
+    animation-delay: 0.5s;
+}
+
+.number h2 {
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.number h2 span {
+    color: white;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+
+.number p {
+    color: white;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+@keyframes animateDot {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(calc(3.6deg * var(--num)));
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/*Circular Stats Ends*/
+
+/*Stat2 start*/
+
+.stat2 {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    background-color: rgb(18, 18, 18);
+    border-radius: 20px;
+    margin: 10px;
+    padding: 15px 0px;
+    height: 100px;
+}
+
+.stat h2 {
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.stat p {
+    font-size: 14px;
+    font-weight: 400;
+    padding-top: 9px;
+    color: #ffffff8f;
+}
+
+.bar-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.newgoal {
+    position: relative;
+    padding-top: 9px;
+    top: 20px;
+    left: 6px;
+}
+
+.newgoal a {
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 400;
+    color: #ffffff8f;
+}
+
+.bar {
+    width: 100px;
+    height: 10px;
+    background: rgb(41, 41, 41);
+    border-radius: 3px;
+}
+
+.bar-per {
+    height: 10px;
+    background: var(--clr);
+    border-radius: 3px;
+    position: relative;
+    animation: fillBars 0.5s linear forwards;
+}
+
+.bar-per::before {
+    content: "";
+    position: absolute;
+    background: var(--clr);
+    box-shadow: 0 0 15px var(--clr),
+        0 0 30px var(--clr);
+    border-radius: 50%;
+    right: 0;
+}
+
+.bar-per::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--clr);
+    box-shadow: 0 0 10px var(--clr),
+        0 0 30px var(--clr);
+    right: 0;
+    border-radius: 3px;
+    top: 0px;
+}
+
+@keyframes fillBars {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+/*Stat2 end*/
+
+.stat3-4{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.above{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.above h2{
+    font-weight: 500;
+}
+.above h3{
+    font-weight: 300;
+    color: #ffffff8f;
+}
+.below form button{
+    width: 42vw;
+    height: 40px;
+    background-color: rgb(33, 33, 33);
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-size: 16px;
+}
+/*Stat3 start*/
+
+.stat3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
+    margin: 0px 5px 5px 10px;
+    color: white;
+    background-color: rgb(18, 18, 18);
+    border-radius: 20px;
+    height: 130px;
+}
+
+/*Stat3 end*/
+
+
+/*Stat4 start*/
+
+.stat4{  
+    width: 50%;
+    margin: 0px 10px 5px 5px;
+    color: white;
+    background-color: rgb(18, 18, 18);
+    border-radius: 20px;
+    height: 130px;
+}
+
+.stat4{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.stat4 .stats{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.stats h2{
+    margin-right: 30px;
+}
+.stats p{
+    margin-top: 4px;
+}
+
+/*Stat4 end*/
+
+/*Stat5 and 6 start*/
+
+.stat5-6{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    background-color: rgb(18, 18, 18);
+    border-radius: 20px;
+    margin: 10px;
+    padding: 15px 0px;
+    height: 50px;
+}
+.stat5{
+    margin-top: 5px;
+}
+.stat5-6 a{
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+    color: #ffffffc8;
+}
+/*Stat5 and 6 end*/
+
+/*Stat 7  start*/
+.stat7 {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    background-color: rgb(18, 18, 18);
+    border-radius: 20px;
+    margin: 10px;
+    padding: 15px 0px;
+    height: 100px;
+}
+
+.timeslept h2 {
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.timeslept span {
+    font-size: 26px;
+    font-weight: 300;
+}
+
+
+.sleeptime-title p {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.sleeptime-title{
+    margin-top: 50px;
+    margin-left: 10px;
+}
+
+/*Stat 7  end*/
+
+/*Stat 8  start*/
+
+.stat8 {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    background-color: rgb(18, 18, 18);
+    border-radius: 20px;
+    margin: 10px;
+    padding: 15px 0px;
+    height: 100px;
+}
+
+.stat8 form button{
+    background: none;
+    border: none;
+    font-size: 22px;
+}
+
+.moodtitle{
+    font-size: 14px;
+    font-weight: 300;
+    margin-top: 50px;
+}
+
+/*Stat 8  end*/
+
+/*Footer starts*/
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #181818;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000; 
+}
+.footer a {
+    color: white;
+    padding: 0 15px;
+    text-decoration: none;
+}
+.footer a:hover {
+    text-decoration: none;
+}
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    
+}
+
+.left{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+/*Footer ends*/
+
+@media (min-width: 768px) {
+    .page{
+        width: 768px;
+        margin-top: 80px;
+    }
+    body{
+        display: flex;
+        justify-content: center;
+    }
+    .below form button{
+        width: 330px;
+    }
+}

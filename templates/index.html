@@ -1,14 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+    <head>
+        <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/index_styles.css' %}">
 </head>
 <body>
-    Homepage
-    <a href = "/logout">Logout</a>
+    <div class="title">Core<span>Vibe</span></div>
+    <div class="page">
+
+        <div class="stat1">
+            <div class="card">
+                <div class="percent" style = "--clr:#63d26e; --num:50;">
+                    <div class="dot"></div>
+                    <svg>
+                        <circle cx="40" cy="40" r="40"></circle>
+                        <circle cx="40" cy="40" r="40"></circle>
+                    </svg>
+                    <div class="number">
+                        <h2>4203</h2>
+                        <p>Steps</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="percent" style = "--clr:#ef5d90; --num:80;">
+                    <div class="dot"></div>
+                    <svg>
+                        <circle cx="40" cy="40" r="40"></circle>
+                        <circle cx="40" cy="40" r="40"></circle>
+                    </svg>
+                    <div class="number">
+                        <h2>204</h2>
+                        <p>KCal</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="percent" style = "--clr:#3da2fb; --num:80;">
+                    <div class="dot"></div>
+                    <svg>
+                        <circle cx="40" cy="40" r="40"></circle>
+                        <circle cx="40" cy="40" r="40"></circle>
+                    </svg>
+                    <div class="number">
+                        <h2>43<span>mins</span></h2>
+                        <p>Active</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat2">
+            <div class="stat">
+                <h2>4203</h2>
+                <p>Daily Goal:6000</p>
+            </div>
+            <div class="bar-container">
+                <div class="bar">
+                    <div class="bar-per" per="90%" style="max-width: 70%; --clr:#63d26e;"></div>
+                </div>
+                <div class="newgoal">
+                    <a href="">Set new goal?</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat3-4">
+            <div class="stat3">
+                <div class="above">
+                    <h2>1250</h2>
+                    <h3>/6000<span>ml</span></h3>
+                </div>
+                <div class="below">
+                    <form action="/home" method="post">
+                        {% csrf_token %}
+                        <button type="submit">+250mL</button>
+                    </form>
+                </div>
+            </div>
+            <div class="stat4">
+                <div class="bar">
+                    <div class="bar-per" per="30%" style="max-width: 30%; --clr:#ef5d90;"></div>
+                </div>
+                <div class="stats">
+                    <h2>57<span>Kg</span></h2>
+                    <p>BMI</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat5-6 stat5">
+            <a href="">Am I healthy?</a>
+        </div>
+        <div class="stat5-6 stat6">
+            <a href="">How was my day so far?</a>
+        </div>
+
+        <div class="stat7">
+            <div class="timeslept">
+                <h2>9<span>hr</span> 40<span>min</span></h2>
+            </div>
+            <div class="sleeptime-title">
+                <p>Sleep Time</p>
+            </div>
+        </div>
+
+        <div class="stat8">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="emojis">
+                    <button type="submit" name="mood_value" value="1">😢</button>
+                    <button type="submit" name="mood_value" value="2">😞</button>
+                    <button type="submit" name="mood_value" value="3">😐</button>
+                    <button type="submit" name="mood_value" value="4">🙂</button>
+                    <button type="submit" name="mood_value" value="5">😃</button>
+                </div>
+            </form>
+            <div class="moodtitle">
+                How is your mood today?
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="left">
+            <a href="">Home</a>
+            <a href="">Diet</a>
+            <a href="">Goals</a>
+        </div>
+        <div class="right">
+            <a href="">Profile</a>
+        </div>
+    </div>
 </body>
 </html>
