@@ -53,6 +53,9 @@ def home(request):
     stream = ollama.generate(model = "phi3:mini", prompt=message)
     hwmd = stream["response"]
 
+    aih = aih.replace('\n', '<br>')
+    hwmd = hwmd.replace('\n', '<br>')
+
     context = {
         'steps' : steps,
         'water' : water,
