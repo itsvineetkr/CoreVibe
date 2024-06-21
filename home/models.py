@@ -21,5 +21,12 @@ class UserGoals(models.Model):
     
     def __str__(self):
         return self.username
+    
+class UserMood(models.Model):
+    username = models.CharField(max_length=50)
+    data = models.JSONField(default=dict)
+    
+    def __str__(self):
+        return self.username
 
 

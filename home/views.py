@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.messages import constants as messages
-from home.models import UserGoals, UserDailyStats, UserStaticStats
+from home.models import UserGoals, UserDailyStats, UserStaticStats, UserMood
 from datetime import datetime
 import ollama
 ollama.pull('phi3:mini')
@@ -19,13 +19,6 @@ def home(request):
     
     username = request.user.username
     data = UserDailyStats.objects.filter(username = username)[0].data[str(datetime.now().date())]
-    if request.method == "POST":
-        todayData = UserDailyStats.objects.filter(username = username)[0]
-        dataDict = todayData.data
-        dataDict[str(datetime.now().date())][1] += 250
-        todayData.data = dataDict
-        todayData.save()
-        return redirect("/home")
     goals = UserGoals.objects.filter(username = username)[0].data
     steps = data[0]
     water = data[1]
@@ -45,16 +38,38 @@ def home(request):
     age = data[2]
     gender = data[3]
 
-    message = f"If my age is {age}, gender is {gender}, weight is {weight} and height is {height} and today I walked {steps} steps and burned {kcal} calories, Am I healthy?. Generate a small and concise response."
-    stream = ollama.generate(model = "phi3:mini", prompt=message)
-    aih = stream["response"]    
+    bmi = round(weight/((height/100)**2),2)
 
-    message = f"If my age is {age}, gender is {gender}, weight is {weight} and height is {height} and today I walked {steps} steps, burned {kcal} calories, drank {water} ml Water and was active for {active} mins, how was my day so far according to this data?. Generate a small and concise response."
-    stream = ollama.generate(model = "phi3:mini", prompt=message)
-    hwmd = stream["response"]
+    pbmi = (bmi/30)*100
 
-    aih = aih.replace('\n', '<br>')
-    hwmd = hwmd.replace('\n', '<br>')
+    if pbmi>30:
+        pbmi = 30
+    
+    aih, hwmd = '', ''
+
+    if request.method == "POST":
+        if 'waterPost' in request.POST:
+            todayData = UserDailyStats.objects.filter(username = username)[0]
+            dataDict = todayData.data
+            dataDict[str(datetime.now().date())][1] += 250
+            todayData.data = dataDict
+            todayData.save()
+            return redirect("/home")
+        elif 'aihPost' in request.POST:
+            message = f"If my age is {age}, gender is {gender}, weight is {weight} and height is {height} and today I walked {steps} steps and burned {kcal} calories, Am I healthy?. Generate a small and concise response."
+            stream = ollama.generate(model = "phi3:mini", prompt=message)
+            aih = stream["response"] 
+        elif 'hwmdPost' in request.POST:
+            message = f"If my age is {age}, gender is {gender}, weight is {weight} and height is {height} and today I walked {steps} steps, burned {kcal} calories, drank {water} ml Water and was active for {active} mins, how was my day so far according to this data?. Generate a small and concise response."
+            stream = ollama.generate(model = "phi3:mini", prompt=message)
+            hwmd = stream["response"]
+        elif 'mood_value' in request.POST:
+            todayData = UserMood.objects.filter(username = username)[0]
+            dataDict = todayData.data
+            dataDict[str(datetime.now())] = request.POST.get("mood_value")
+            todayData.data = dataDict
+            todayData.save()
+            return redirect("/home")
 
     context = {
         'steps' : steps,
@@ -72,7 +87,10 @@ def home(request):
         'pactive' : (active/gactive)*100,
         'pkcal' : (kcal/gkcal)*100,
         'hwmd' : hwmd,
-        'aih' : aih
+        'aih' : aih,
+        'bmi' : bmi,
+        'pbmi' : pbmi,
+        'weight' : weight
     }
 
     return render(request, "index.html", context = context)
@@ -91,11 +109,14 @@ def signin(request):
                 )
                 user.save()
 
-                dailyStats = UserDailyStats(username = username, data = {str(datetime.now().date()):[]})
+                dailyStats = UserDailyStats(username = username, data = {str(datetime.now().date()):[0,0,0,0,0]})
                 dailyStats.save()
 
                 goals = UserGoals(username = username, data = [6000, 2000, 60, 500])
                 goals.save()
+
+                mood = UserMood(username = username, data = {})
+                mood.save()
 
                 return redirect("/details")
             

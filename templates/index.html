@@ -10,7 +10,6 @@
 <body>
     <div class="title">Core<span>Vibe</span></div>
     <div class="page">
-
         <div class="stat1">
             <div class="card">
                 <div class="percent" style = "--clr:#63d26e; --num:{{psteps}};">
@@ -77,27 +76,33 @@
                 <div class="below">
                     <form action="/home" method="post">
                         {% csrf_token %}
-                        <button type="submit">+250mL</button>
+                        <button type="submit" name="waterPost">+250mL</button>
                     </form>
                 </div>
             </div>
             <div class="stat4">
                 <div class="bar">
-                    <div class="bar-per" per="30%" style="max-width: 30%; --clr:#ef5d90;"></div>
+                    <div class="bar-per" per="30%" style="max-width: {{pbmi}}%; --clr:#ef5d90;"></div>
                 </div>
                 <div class="stats">
-                    <h2>57<span>Kg</span></h2>
-                    <p>BMI</p>
+                    <h2>{{weight}}<span>Kg</span></h2>
+                    <p>BMI: {{bmi}}</p>
                 </div>
             </div>
         </div>
 
         <div class="stat5-6 stat5">
-            <a href="">Am I healthy?</a>
+            <form action="/home" method="POST">
+                {% csrf_token %}
+                <button type="submit" name = "aihPost">Am I healthy?</button>
+            </form>
             <p>{{aih}}</p>
         </div>
         <div class="stat5-6 stat6">
-            <a href="">How was my day so far?</a>
+            <form action="/home" method="POST">
+                {% csrf_token %}
+                <button type="submit" name = "hwmdPost">How was my day so far?</button>
+            </form>
             <p>{{hwmd}}</p>
         </div>
 

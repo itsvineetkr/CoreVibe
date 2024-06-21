@@ -35,7 +35,8 @@ body {
 }
 
 .page{
-    height: 780px;
+    height: auto;
+    margin-bottom: 70px;
 }
 
 /*Circular Stats Starts*/
@@ -360,11 +361,16 @@ body {
     margin-top: 5px;
 }
 
-.stat5-6 a{
+.stat5-6 button{
     text-decoration: none;
     font-size: 15px;
     font-weight: 400;
     color: #ffffffc8;
+    background-color: #18181800;
+    border: none;
+    font-family: "Montserrat", sans-serif;
+    margin-top: 10px;
+    font-size: 1.1em;
 }
 /*Stat5 and 6 end*/
 
