@@ -5,6 +5,7 @@ from django.contrib.messages import constants as messages
 from home.models import UserGoals, UserDailyStats, UserStaticStats
 from datetime import datetime
 import ollama
+ollama.pull('phi3:mini')
 
 
 
@@ -44,24 +45,13 @@ def home(request):
     age = data[2]
     gender = data[3]
 
-    ollama.pull('phi3:mini')
-    message = f"If my age is {age}, gender is {gender}, weight is {weight} and height is {height} and today I walked {steps} steps and burned {kcal} calories, Am I healthy?"
-    stream = ollama.chat(
-        model = 'phi3:mini',
-        messages = [{"role":"user", 
-                    "content":message}],
-        stream = True
-    )
-    aih = stream[0]["message"]["content"]
+    message = f"If my age is {age}, gender is {gender}, weight is {weight} and height is {height} and today I walked {steps} steps and burned {kcal} calories, Am I healthy?. Generate a small and concise response."
+    stream = ollama.generate(model = "phi3:mini", prompt=message)
+    aih = stream["response"]    
 
-    message = f"If my age is {age}, gender is {gender}, weight is {weight} and height is {height} and today I walked {steps} steps, burned {kcal} calories, drank {water} ml Water and was active for {active} mins, how was my day so far according to this data?"
-    stream = ollama.chat(
-        model = 'phi3:mini',
-        messages = [{"role":"user", 
-                    "content":message}],
-        stream = True
-    )
-    hwmd = stream[0]["message"]["content"]
+    message = f"If my age is {age}, gender is {gender}, weight is {weight} and height is {height} and today I walked {steps} steps, burned {kcal} calories, drank {water} ml Water and was active for {active} mins, how was my day so far according to this data?. Generate a small and concise response."
+    stream = ollama.generate(model = "phi3:mini", prompt=message)
+    hwmd = stream["response"]
 
     context = {
         'steps' : steps,
