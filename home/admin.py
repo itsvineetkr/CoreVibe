@@ -1,3 +1,6 @@
 from django.contrib import admin
+from home.models import UserDailyStats, UserStaticStats, UserGoals
 
-# Register your models here.
+admin.site.register(UserDailyStats)
+admin.site.register(UserStaticStats)
+admin.site.register(UserGoals)

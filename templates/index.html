@@ -13,40 +13,40 @@
 
         <div class="stat1">
             <div class="card">
-                <div class="percent" style = "--clr:#63d26e; --num:50;">
+                <div class="percent" style = "--clr:#63d26e; --num:{{psteps}};">
                     <div class="dot"></div>
                     <svg>
                         <circle cx="40" cy="40" r="40"></circle>
                         <circle cx="40" cy="40" r="40"></circle>
                     </svg>
                     <div class="number">
-                        <h2>4203</h2>
+                        <h2>{{steps}}</h2>
                         <p>Steps</p>
                     </div>
                 </div>
             </div>
             <div class="card">
-                <div class="percent" style = "--clr:#ef5d90; --num:80;">
+                <div class="percent" style = "--clr:#ef5d90; --num:{{pkcal}};">
                     <div class="dot"></div>
                     <svg>
                         <circle cx="40" cy="40" r="40"></circle>
                         <circle cx="40" cy="40" r="40"></circle>
                     </svg>
                     <div class="number">
-                        <h2>204</h2>
+                        <h2>{{kcal}}</h2>
                         <p>KCal</p>
                     </div>
                 </div>
             </div>
             <div class="card">
-                <div class="percent" style = "--clr:#3da2fb; --num:80;">
+                <div class="percent" style = "--clr:#3da2fb; --num:{{pactive}};">
                     <div class="dot"></div>
                     <svg>
                         <circle cx="40" cy="40" r="40"></circle>
                         <circle cx="40" cy="40" r="40"></circle>
                     </svg>
                     <div class="number">
-                        <h2>43<span>mins</span></h2>
+                        <h2>{{active}}<span>mins</span></h2>
                         <p>Active</p>
                     </div>
                 </div>
@@ -55,12 +55,12 @@
 
         <div class="stat2">
             <div class="stat">
-                <h2>4203</h2>
-                <p>Daily Goal:6000</p>
+                <h2>{{steps}}</h2>
+                <p>Daily Goal:{{gsteps}}</p>
             </div>
             <div class="bar-container">
                 <div class="bar">
-                    <div class="bar-per" per="90%" style="max-width: 70%; --clr:#63d26e;"></div>
+                    <div class="bar-per" per="90%" style="max-width: {{psteps}}%; --clr:#63d26e;"></div>
                 </div>
                 <div class="newgoal">
                     <a href="">Set new goal?</a>
@@ -71,8 +71,8 @@
         <div class="stat3-4">
             <div class="stat3">
                 <div class="above">
-                    <h2>1250</h2>
-                    <h3>/6000<span>ml</span></h3>
+                    <h2>{{water}}</h2>
+                    <h3>/{{gwater}}<span>ml</span></h3>
                 </div>
                 <div class="below">
                     <form action="/home" method="post">
@@ -94,14 +94,16 @@
 
         <div class="stat5-6 stat5">
             <a href="">Am I healthy?</a>
+            <p>{{aih}}</p>
         </div>
         <div class="stat5-6 stat6">
             <a href="">How was my day so far?</a>
+            <p>{{hwmd}}</p>
         </div>
 
         <div class="stat7">
             <div class="timeslept">
-                <h2>9<span>hr</span> 40<span>min</span></h2>
+                <h2>{{sleephr}}<span>hr</span> {{sleepmin}}<span>min</span></h2>
             </div>
             <div class="sleeptime-title">
                 <p>Sleep Time</p>
