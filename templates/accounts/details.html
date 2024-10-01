@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/details_styles.css' %}">
+</head>
+
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form method="POST">
+                    {% csrf_token %}
+                    <h2>Fill your details</h2>
+                    <div class="inputbox">
+                        <input type="text" name="height" required>
+                        <label for="height">Height</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="weight" required>
+                        <label for="weight">Weight</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="age" required>
+                        <label for="age">Age</label>
+                    </div>
+                    <div class="container">
+                        <h2>Select Your Gender</h2>
+                        <div class="gender-option">
+                            <input type="radio" id="male" name="gender" value="male">
+                            <label for="male">Male</label>
+                        </div>
+                        <div class="gender-option">
+                            <input type="radio" id="female" name="gender" value="female">
+                            <label for="female">Female</label>
+                        </div>
+                        <div class="gender-option">
+                            <input type="radio" id="other" name="gender" value="other">
+                            <label for="other">Other</label>
+                        </div>
+                        <div class="gender-option">
+                            <input type="radio" id="prefer-not-to-say" name="gender" value="prefer-not-to-say">
+                            <label for="prefer-not-to-say">Prefer not to say</label>
+                        </div>
+                    </div>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

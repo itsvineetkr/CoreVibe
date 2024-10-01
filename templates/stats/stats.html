@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index_styles.css' %}">
+</head>
+<body>
+    <div class="title">Core<span>Vibe</span></div>
+    <div class="page">
+        <div class="stat1">
+            <div class="card">
+                <div class="percent" style = "--clr:#63d26e; --num:{{ percentStats.steps }};">
+                    <div class="dot"></div>
+                    <svg>
+                        <circle cx="40" cy="40" r="40"></circle>
+                        <circle cx="40" cy="40" r="40"></circle>
+                    </svg>
+                    <div class="number">
+                        <h2>{{ dailyStats.steps }}</h2>
+                        <p>Steps</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="percent" style = "--clr:#ef5d90; --num:{{ percentStats.kcal }};">
+                    <div class="dot"></div>
+                    <svg>
+                        <circle cx="40" cy="40" r="40"></circle>
+                        <circle cx="40" cy="40" r="40"></circle>
+                    </svg>
+                    <div class="number">
+                        <h2>{{dailyStats.kcal}}</h2>
+                        <p>KCal</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="percent" style = "--clr:#3da2fb; --num:{{percentStats.active}};">
+                    <div class="dot"></div>
+                    <svg>
+                        <circle cx="40" cy="40" r="40"></circle>
+                        <circle cx="40" cy="40" r="40"></circle>
+                    </svg>
+                    <div class="number">
+                        <h2>{{dailyStats.active}}<span>mins</span></h2>
+                        <p>Active</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat2">
+            <div class="stat">
+                <h2>{{dailyStats.steps}}</h2>
+                <p>Daily Goal:{{goals.steps}}</p>
+            </div>
+            <div class="bar-container">
+                <div class="bar">
+                    <div class="bar-per" per="90%" style="max-width: {{percentStats.steps}}%; --clr:#63d26e;"></div>
+                </div>
+                <div class="newgoal">
+                    <a href="">Set new goal?</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat3-4">
+            <div class="stat3">
+                <div class="above">
+                    <h2>{{dailyStats.water}}</h2>
+                    <h3>/{{goals.water}}<span>ml</span></h3>
+                </div>
+                <div class="below">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="increase_water">
+                        <button type="submit">+250mL</button>
+                    </form>
+                </div>
+            </div>
+            <div class="stat4">
+                <div class="bar">
+                    <div class="bar-per" per="30%" style="max-width: {{ bmi.percentage }}%; --clr:#ef5d90;"></div>
+                </div>
+                <div class="stats">
+                    <h2>{{physicalData.weight}}<span>Kg</span></h2>
+                    <p>BMI: {{bmi.bmi}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat5-6 stat5">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="am_i_healthy">
+                <button type="submit">Am I healthy?</button>
+            </form>
+            <p>{{ textResponse.am_i_healthy }}</p>
+        </div>
+        <div class="stat5-6 stat6">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="how_was_my_day">
+                <button type="submit">How was my day so far?</button>
+            </form>
+            <p>{{ textResponse.how_was_my_day }}</p>
+        </div>
+
+        <div class="stat7">
+            <div class="timeslept">
+                {% with dailyStats.sleep|date:"H:i" as sleep_time %}
+                    <h2>{{ sleep_time|slice:"0:2" }}<span>hr</span> {{ sleep_time|slice:"2:4" }}<span>min</span></h2>
+                {% endwith %}
+            </div>
+            <div class="sleeptime-title">
+                <p>Sleep Time</p>
+            </div>
+        </div>
+
+        {% comment %} <div class="stat8">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="emojis">
+                    <button type="submit" name="mood_value" value="1">😢</button>
+                    <button type="submit" name="mood_value" value="2">😞</button>
+                    <button type="submit" name="mood_value" value="3">😐</button>
+                    <button type="submit" name="mood_value" value="4">🙂</button>
+                    <button type="submit" name="mood_value" value="5">😃</button>
+                </div>
+            </form>
+            <div class="moodtitle">
+                How is your mood today?
+            </div>
+        </div> {% endcomment %}
+    
+    </div>
+    <div class="footer">
+        <div class="left">
+            <a href="">Home</a>
+            <a href="">Diet</a>
+            <a href="">Goals</a>
+        </div>
+        <div class="right">
+            <a href="">Profile</a>
+        </div>
+    </div>
+</body>
+</html>
