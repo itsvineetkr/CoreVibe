@@ -1,7 +1,14 @@
 import os
 from stats.models import *
 from django.utils import timezone
-from openai import OpenAI
+from huggingface_hub import InferenceClient
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
 
 def get_user_display_data(user):
@@ -70,37 +77,33 @@ def get_user_display_data(user):
 
 
 def generate_response(prompt):
-    token = os.environ["GITHUB_TOKEN"]
-    endpoint = "https://models.inference.ai.azure.com"
-    model_name = "gpt-4o"
-
-    client = OpenAI(
-        base_url=endpoint,
-        api_key=token,
-    )
-    response = client.chat.completions.create(
+    client = InferenceClient(api_key=os.getenv("HUGGINGFACEHUB_API_TOKEN"))
+    initPrompt = """
+    You are an AI assistant that can answer questions about health and wellness. 
+    You are given data of user related to their physical health.
+    You need to give answer to the question asked after the data.
+    The answer must be in paragraph and not too long.
+    """
+    response = client.chat_completion(
+        model="mistralai/Mistral-7B-Instruct-v0.3",
         messages=[
-            {
-                "role": "system",
-                "content": "You are a helpful healthcare assistant. Always give answers in paragraphs.",
-            },
-            {
-                "role": "user",
-                "content": prompt,
-            },
+                {
+                    "role": "system",
+                    "content": initPrompt
+                },
+                {
+                    "role": "user",
+                    "content": prompt,
+                },
         ],
-        temperature=0.6,
-        top_p=1.0,
-        max_tokens=100,
-        model=model_name,
+        max_tokens=500,
+        stream=False,
     )
 
-    return response.choices[0].message.content
-
+    return response["choices"][0]["message"]["content"]
 
 def generate_prompt(action, data):
-    print(action, data)
     if action == "am_i_healthy":
-        return f"If my age is {data['physicalData'].age}, gender is {data['physicalData'].gender}, weight is {data['physicalData'].weight} and height is {data['physicalData'].height} and today I walked {data['dailyStats'].steps} steps and burned {data['dailyStats'].kcal} calories, Am I healthy?"
+        return f"Data: age is {data['physicalData'].age}, gender is {data['physicalData'].gender}, weight is {data['physicalData'].weight} and height is {data['physicalData'].height} and today I walked {data['dailyStats'].steps} steps and burned {data['dailyStats'].kcal} calories, Am I healthy?"
     if action == "how_was_my_day":
-        return f"If my age is {data['physicalData'].age}, gender is {data['physicalData'].gender}, weight is {data['physicalData'].weight} and height is {data['physicalData'].height} and today I walked {data['dailyStats'].steps} steps, burned {data['dailyStats'].kcal} calories, drank {data['dailyStats'].water} ml Water and was active for {data['dailyStats'].active} mins, how was my day so far according to this data?."
+        return f"Data: age is {data['physicalData'].age}, gender is {data['physicalData'].gender}, weight is {data['physicalData'].weight} and height is {data['physicalData'].height} and today I walked {data['dailyStats'].steps} steps, burned {data['dailyStats'].kcal} calories, drank {data['dailyStats'].water} ml Water and was active for {data['dailyStats'].active} mins, how was my day so far according to this data?."

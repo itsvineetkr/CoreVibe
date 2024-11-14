@@ -5,7 +5,7 @@ from stats.utils import *
 def homepage(request):
     user = request.user
 
-    if user.is_anonymous:
+    if user.is_anonymous or user.is_staff:
         return redirect("/login")
 
     data = get_user_display_data(user)

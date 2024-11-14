@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login as login_user, logout as logout_user, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
-from stats.models import UserPhysicalData
+from stats.models import UserPhysicalData, UserGoals
+from datetime import time
 
 
 def login(request):
@@ -56,10 +57,25 @@ def details(request):
         age = int(request.POST.get("age"))
         gender = request.POST.get("gender")
 
-        data = UserPhysicalData(
+        steps = int(request.POST.get("steps"))
+        water = int(request.POST.get("water"))
+        active_minutes = int(request.POST.get("active"))
+        kcal = int(request.POST.get("kcal"))
+        no_of_hours = int(request.POST.get("sleep"))
+        sleep_hours = time(hour=no_of_hours)
+
+        UserGoals(
+            user = user,
+            steps = steps,
+            water = water,
+            active = active_minutes,
+            kcal = kcal,
+            sleep = sleep_hours
+        ).save()
+
+        UserPhysicalData(
             user=user, height=height, weight=weight, age=age, gender=gender
-        )
-        data.save()
+        ).save()
 
         return redirect("/login")
     return render(request, "accounts/details.html")
